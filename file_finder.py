@@ -27,8 +27,8 @@ def search_file(filename, search_path):
 	else:
 		print(f"File '{filename}' not found.")
 
-
-# Example usage
-filename = input("Enter the filename you want to search for: ")
-search_path = "C:\\"  # Set to the root directory or any specific starting directory
-search_file(filename, search_path)
+if __name__ == "__main__":
+	# Example usage
+	filename = input("Enter the filename you want to search for: ")
+	search_path = "C:\\"  # Set to the root directory or any specific starting directory
+	search_file(filename, search_path)

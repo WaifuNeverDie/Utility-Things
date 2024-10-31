@@ -1,10 +1,10 @@
 import os
 import shutil
 
-def organize_downloads_folder():
-	# Define paths for downloads and media folder
-	downloads_folder = os.path.expanduser("~/Downloads")
-	media_folder = os.path.join(downloads_folder, "Media")
+def organize_downloads_folder(target_folder):
+	# Define paths for target and media folder
+	target_folder = os.path.expanduser(target_folder)
+	media_folder = os.path.join(target_folder, "Media")
 	
 	# Create Media folder if it doesn't exist
 	if not os.path.exists(media_folder):
@@ -15,12 +15,12 @@ def organize_downloads_folder():
 	music_extensions = [".mp3", ".wav", ".aac", ".flac", ".m4a"]
 	movie_extensions = [".mp4", ".mkv", ".avi", ".mov", ".wmv"]
 	
-	# Get a list of all files in the Downloads folder
-	files = os.listdir(downloads_folder)
+	# Get a list of all files in the target folder
+	files = os.listdir(target_folder)
 	
 	# Loop through the files and move media files to the Media folder
 	for file in files:
-		file_path = os.path.join(downloads_folder, file)
+		file_path = os.path.join(target_folder, file)
 		
 		# Skip folders and non-media files
 		if os.path.isfile(file_path):
@@ -35,4 +35,6 @@ def organize_downloads_folder():
 				print(f"Moved: {file}")
 
 if __name__ == "__main__":
-	organize_downloads_folder()
+	target_folder = os.path.expanduser("~/Downloads")
+	organize_downloads_folder(target_folder)
+
