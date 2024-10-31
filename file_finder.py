@@ -1,6 +1,9 @@
 import os
 import string
 import ctypes
+import time
+import itertools
+import threading
 
 def search_file_with_keyword(keyword, search_path):
 	"""
@@ -44,6 +47,16 @@ def get_available_drives():
 		bitmask >>= 1
 	return drives
 
+def loading_animation(stop_event):
+	"""
+	Display a loading animation until the stop_event is set.
+	"""
+	for frame in itertools.cycle(['|', '/', '-', '\\']):
+		if stop_event.is_set():
+			break
+		print(f"\rLoading {frame}", end="", flush=True)
+		time.sleep(0.1)
+
 def search_keyword_in_all_drives(keyword):
 	"""
 	Search for files containing the keyword in all available drives.
@@ -54,10 +67,20 @@ def search_keyword_in_all_drives(keyword):
 	drives = get_available_drives()
 	all_results = []
 	
-	for drive in drives:
-		print(f"Searching in drive {drive}...")
-		results = search_file_with_keyword(keyword, drive)
-		all_results.extend(results)
+	stop_event = threading.Event()
+	loading_thread = threading.Thread(target=loading_animation, args=(stop_event,))
+	loading_thread.start()
+	
+	try:
+		for drive in drives:
+			print(f"\nSearching in drive {drive}...")
+			results = search_file_with_keyword(keyword, drive)
+			all_results.extend(results)
+	finally:
+		stop_event.set()
+		loading_thread.join()
+	
+	print("\r", end="")  # Clear the loading line
 	
 	if all_results:
 		print(f"Files containing the keyword '{keyword}' found at the following locations:")
