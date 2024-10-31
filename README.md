@@ -25,6 +25,7 @@ This project provides a set of tools for managing files in a structured way. The
 2. **file_organizer**: Automatically organizes files into folders based on file types, date, or custom criteria.
 3. **advanced_organizer**: An enhanced file organizer with more advanced sorting options and customization capabilities.
 4. **file_collector**: Gathers files from multiple directories into a single location or structured folder hierarchy.
+5. **deep_scan**: Perform a deep scan file for delete file but not be override in hard drive.
 
 ---
 
